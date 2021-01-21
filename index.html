@@ -3,48 +3,58 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
   <style>
-    [v-cloak] > * { display:none }
-    [v-cloak]::before { content: "loading…" }
+    [v-cloak]>* {
+      display: none
+    }
+
+    [v-cloak]::before {
+      content: "loading…"
+    }
   </style>
 </head>
 
 <body>
   <div id="registerForm" v-cloak>
-    <form id="contactForm" name="submit-to-google-sheet">
-      <div>
-        <input v-model="groupName" name="groupName" placeholder="groupName" required>
-        <input name="groupContact" placeholder="groupContact" required>
-        <input name="groupContactPhone" placeholder="groupContactPhone" required>
-        <input name="groupContactEmail" placeholder="groupContactEmail" required>
-        <input v-model="records" name="records" type="hidden">
+    <form id="contactForm" name="submit-to-google-sheet" class="container ">
+      <div class="row justify-content-start">
+        <div class="col-md-8">
+          <div class="row justify-content-start">
+            <div class="col">
+              <div class="row">
+                <input class="col" v-model="groupName" name="groupName" placeholder="groupName" required>
+                <input class="col" name="groupContact" placeholder="groupContact" required>
+                <input class="col" name="groupContactPhone" placeholder="groupContactPhone" required>
+                <input class="col" name="groupContactEmail" placeholder="groupContactEmail" required>
+              </div>
+              <input v-model="records" name="records" type="hidden">
+            </div>
+          </div>
+
+          <div class="row justify-content-start" v-for="(c, index) in contacts" :key="index">
+            <label class="col-1">{{index+1}}</label>
+
+            <!-- <input v-model="groupName" name="group" type="hidden"> -->
+            <input class="col" v-model="c.name" :name="'name'+(index+1)" placeholder="name">
+            <input class="col" v-model="c.mobile" :name="'mobile'+(index+1)" placeholder="mobile">
+            <input class="col" v-model="c.phone" :name="'phone'+(index+1)" placeholder="phone">
+            <button class="col-2" @click="contacts.splice(index, 1)">remove</button>
+
+          </div>
+        </div>
       </div>
-      <div v-for="(c, index) in contacts" :key="index">
-        <label>{{index+1}}</label>
-        
-        <!-- <input v-model="groupName" name="group" type="hidden"> -->
-        <input v-model="c.name" :name="'name'+(index+1)" placeholder="name">
-        <input v-model="c.mobile" :name="'mobile'+(index+1)" placeholder="mobile">
-        <input v-model="c.phone" :name="'phone'+(index+1)" placeholder="phone">
-        <button @click="contacts.splice(index, 1)">remove</button>
-      </div>
-      <!-- <div v-for="index in records" :key="index">
-        <label>{{index}}</label>
-        
-        <input v-model="groupName" name="group" type="hidden">
-        <input :name="'name'+index" placeholder="name">
-        <input :name="'mobile'+index" placeholder="mobile">
-        <input :name="'phone'+index" placeholder="phone">
-      </div> -->
-      
     </form>
     <button @click="addContact">Add</button>
     <button @click="sendForm" :disabled="!validInputs">Send</button>
+    <button @click="clearAll">ClearForm</button>
   </div>
   <script src="https://unpkg.com/vue@next"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
   <script src="script.js"></script>
 </body>
 
